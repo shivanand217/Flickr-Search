@@ -66,6 +66,7 @@
 			children = (
 				18F94FA622424AB8009D0B0B /* Flickr */,
 				18F94F9422424A51009D0B0B /* AppDelegate.swift */,
+				18F94FAF224250FD009D0B0B /* FlickrPhotosViewController.swift */,
 				18F94F9622424A51009D0B0B /* ViewController.swift */,
 				18F94F9822424A51009D0B0B /* Main.storyboard */,
 				18F94F9B22424A53009D0B0B /* Assets.xcassets */,
@@ -82,7 +83,6 @@
 				18F94FA922424B4B009D0B0B /* FlickrPhoto.swift */,
 				18F94FAB22424DAF009D0B0B /* Flickr.swift */,
 				18F94FAD22424DD4009D0B0B /* Result.swift */,
-				18F94FAF224250FD009D0B0B /* FlickrPhotosViewController.swift */,
 			);
 			path = Flickr;
 			sourceTree = "<group>";
