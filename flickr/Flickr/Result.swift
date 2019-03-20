@@ -1,5 +1,5 @@
 //
-//  FlickrSearchResults.swift
+//  Result.swift
 //  flickr
 //
 //  Created by apple on 20/03/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FlickrSearchResults {
-    let searchTerm: String
-    //let searchResults:
+enum Result<ResultType> {
+    case results(ResultType)
+    case error(Error)
 }
