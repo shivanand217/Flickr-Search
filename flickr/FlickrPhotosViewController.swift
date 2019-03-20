@@ -24,6 +24,7 @@ final class FlickrPhotosViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegates()
+        collectionView.bounces = true
     }
 }
 
