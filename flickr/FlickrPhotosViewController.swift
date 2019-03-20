@@ -9,6 +9,9 @@
 import UIKit
 
 final class FlickrPhotosViewController: UICollectionViewController {
+    
+    @IBOutlet weak var searchField: UITextField!
+    
     // MARK: - Properties
     private let reuseIdentifier = "FlickrCell"
     private let sectionInsets = UIEdgeInsets(top: 50.0,
@@ -17,6 +20,11 @@ final class FlickrPhotosViewController: UICollectionViewController {
                                              right: 20.0)
     private var searches: [FlickrSearchResults] = []
     private let flickr = Flickr()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupDelegates()
+    }
 }
 
 private extension FlickrPhotosViewController {
@@ -27,6 +35,7 @@ private extension FlickrPhotosViewController {
 
 // MARK: - Text Field Delegate
 extension FlickrPhotosViewController : UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let activityIndicator = UIActivityIndicatorView(style: .gray)
         textField.addSubview(activityIndicator)
@@ -52,6 +61,7 @@ extension FlickrPhotosViewController : UITextFieldDelegate {
     }
 }
 
+//MARK: - Data Source Methods
 extension FlickrPhotosViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return searches.count
@@ -65,5 +75,12 @@ extension FlickrPhotosViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         cell.backgroundColor = UIColor.black
         return cell
+    }
+}
+
+//MARK: - Utilities
+extension FlickrPhotosViewController {
+    func setupDelegates() {
+        searchField.delegate = self
     }
 }
