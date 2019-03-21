@@ -12,6 +12,26 @@ final class FlickrPhotosViewController: UICollectionViewController {
     
     @IBOutlet weak var searchField: UITextField!
     
+    var largePhotoIndexPath: IndexPath? {
+        didSet {
+            var indexPaths: [IndexPath] = []
+            if let largePhotoIndexPath = largePhotoIndexPath {
+                indexPaths.append(largePhotoIndexPath)
+            }
+            
+            if let oldValue = oldValue {
+                indexPaths.append(oldValue)
+            }
+            collectionView.performBatchUpdates({
+                self.collectionView.reloadItems(at: indexPaths)
+            }) { (_) in
+                if let largePhotoIndexPath = self.largePhotoIndexPath {
+                    self.collectionView.scrollToItem(at: largePhotoIndexPath, at: .centeredVertically, animated: true)
+                }
+            }
+        }
+    }
+    
     // MARK: - Properties
     private let reuseIdentifier = "FlickrCell"
     private let sectionInsets = UIEdgeInsets(top: 50.0,
@@ -27,6 +47,7 @@ final class FlickrPhotosViewController: UICollectionViewController {
         setupDelegates()
         collectionView.bounces = true
     }
+    
 }
 
 private extension FlickrPhotosViewController {
@@ -39,6 +60,7 @@ private extension FlickrPhotosViewController {
 extension FlickrPhotosViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searches.removeAll()
+        collectionView?.reloadData()
         let activityIndicator = UIActivityIndicatorView(style: .gray)
         textField.addSubview(activityIndicator)
         activityIndicator.frame = textField.bounds
@@ -112,6 +134,18 @@ extension FlickrPhotosViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
+    }
+}
+
+//MARK: - Collection View Delegate Methods
+extension FlickrPhotosViewController {
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if largePhotoIndexPath == indexPath {
+            largePhotoIndexPath = nil
+        } else {
+            largePhotoIndexPath = indexPath
+        }
+        return false
     }
 }
 
