@@ -96,10 +96,24 @@ extension FlickrPhotosViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FlickrPhotoCell
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: reuseIdentifier, for: indexPath) as? FlickrPhotoCell else {
+                preconditionFailure("Invalid cell type.")
+        }
         let flickrPhoto = photo(for: indexPath)
-        cell.backgroundColor = UIColor.white
+        cell.activityIndicator.stopAnimating()
+        
+        guard indexPath == largePhotoIndexPath else {
+            cell.imageView.image = flickrPhoto.thumbnail
+            return cell
+        }
+        guard flickrPhoto.largeImage == nil else {
+            cell.imageView.image = flickrPhoto.largeImage
+            return cell
+        }
         cell.imageView.image = flickrPhoto.thumbnail
+        performLargeImageFetch(for: indexPath, flickrPhoto: flickrPhoto)
+        
         return cell
     }
     
@@ -164,5 +178,26 @@ extension FlickrPhotosViewController {
 extension FlickrPhotosViewController {
     func setupDelegates() {
         searchField.delegate = self
+    }
+    
+    func performLargeImageFetch(for indexPath: IndexPath, flickrPhoto: FlickrPhoto) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FlickrPhotoCell else {
+            return
+        }
+        cell.activityIndicator.startAnimating()
+        
+        flickrPhoto.loadLargeImage { [weak self] (result) in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .results(let photo):
+                if indexPath == self.largePhotoIndexPath {
+                    cell.imageView.image = photo.largeImage
+                }
+            case .error(_):
+                return
+            }
+        }
     }
 }
