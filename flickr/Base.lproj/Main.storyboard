@@ -51,8 +51,8 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1RM-dK-urQ">
-                                    <rect key="frame" x="166.5" y="34.5" width="42" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
+                                    <rect key="frame" x="166" y="34.5" width="43" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -62,6 +62,9 @@
                                 <constraint firstItem="1RM-dK-urQ" firstAttribute="centerY" secondItem="ToP-yD-zx4" secondAttribute="centerY" id="EgF-4D-nk1"/>
                                 <constraint firstItem="1RM-dK-urQ" firstAttribute="centerX" secondItem="ToP-yD-zx4" secondAttribute="centerX" id="Vjf-pm-swI"/>
                             </constraints>
+                            <connections>
+                                <outlet property="label" destination="1RM-dK-urQ" id="raX-PK-7MM"/>
+                            </connections>
                         </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="xqv-bN-BrG" id="4dr-do-bBg"/>
@@ -71,7 +74,7 @@
                     <navigationItem key="navigationItem" id="xEq-1a-xwU">
                         <nil key="title"/>
                         <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="center" minimumFontSize="17" id="uCN-2u-CM1">
-                            <rect key="frame" x="154.5" y="7" width="66.5" height="30"/>
+                            <rect key="frame" x="101" y="7" width="173" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>

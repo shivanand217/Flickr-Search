@@ -6,6 +6,5 @@ target 'flickr' do
   use_frameworks!
 
   # Pods for flickr
-  
 
 end

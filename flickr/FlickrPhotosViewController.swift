@@ -37,7 +37,6 @@ private extension FlickrPhotosViewController {
 
 // MARK: - Text Field Delegate
 extension FlickrPhotosViewController : UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searches.removeAll()
         let activityIndicator = UIActivityIndicatorView(style: .gray)
@@ -80,6 +79,21 @@ extension FlickrPhotosViewController {
         cell.backgroundColor = UIColor.white
         cell.imageView.image = flickrPhoto.thumbnail
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(FlickrPhotoHeaderView.self)", for: indexPath) as? FlickrPhotoHeaderView
+                else {
+                fatalError("Invalid view type")
+            }
+            let searchTerm = searches[indexPath.section].searchTerm
+            headerView.label.text = searchTerm
+            return headerView
+        default:
+            assert(false, "Invalid element type")
+        }
     }
 }
 
