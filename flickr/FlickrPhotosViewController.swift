@@ -122,6 +122,17 @@ extension FlickrPhotosViewController {
 //MARK: - Collection View Flow Layout Delegate
 extension FlickrPhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        /**
+         To update the size of the cell the user just tapped,
+         you need to modify collectionView(_:layout:sizeForItemAt:)
+        **/
+        if indexPath == largePhotoIndexPath {
+            let flickrPhoto = photo(for: indexPath)
+            var size = collectionView.bounds.size
+            size.height -= (sectionInsets.top + sectionInsets.bottom)
+            size.width -= (sectionInsets.left + sectionInsets.right)
+            return flickrPhoto.sizeToFillWidth(of: size)
+        }
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
