@@ -12,6 +12,7 @@ final class FlickrPhotosViewController: UICollectionViewController {
     
     @IBOutlet weak var searchField: UITextField!
     
+    // Optional Property to keep track of the largePhotoIndexPath
     var largePhotoIndexPath: IndexPath? {
         didSet {
             var indexPaths: [IndexPath] = []
@@ -32,6 +33,28 @@ final class FlickrPhotosViewController: UICollectionViewController {
         }
     }
     
+    var sharing: Bool = false {
+        didSet {
+            collectionView.allowsMultipleSelection = sharing
+            
+            collectionView.selectItem(at: nil, animated: true, scrollPosition: [])
+            selectedPhotos.removeAll()
+            
+            guard let shareButton = self.navigationItem.rightBarButtonItems?.first else {
+                return
+            }
+            
+            guard sharing else {
+                navigationItem.setRightBarButton(shareButton, animated: true)
+                return
+            }
+            
+            if largePhotoIndexPath != nil {
+                largePhotoIndexPath = nil
+            }
+        }
+    }
+    
     // MARK: - Properties
     private let reuseIdentifier = "FlickrCell"
     private let sectionInsets = UIEdgeInsets(top: 50.0,
@@ -41,6 +64,9 @@ final class FlickrPhotosViewController: UICollectionViewController {
     private var searches: [FlickrSearchResults] = []
     private let itemsPerRow: CGFloat = 3
     private let flickr = Flickr()
+    
+    private var selectedPhotos: [FlickrPhoto] = []
+    private let shareLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -200,4 +226,5 @@ extension FlickrPhotosViewController {
             }
         }
     }
+    
 }
